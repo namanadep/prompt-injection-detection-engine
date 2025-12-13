@@ -1,5 +1,6 @@
 """FastAPI application for Prompt Injection Detection Engine."""
 from fastapi import FastAPI, HTTPException, Request
+from starlette.requests import Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from typing import List
@@ -10,7 +11,7 @@ import json
 from .config import settings
 from .models.request import DetectionRequest, BatchDetectionRequest, HealthResponse
 from .models.detection import DetectionResult, DetectionStats, AnalyticsData
-from .services.aggregator import aggregator
+from .services.enhanced_aggregator import enhanced_aggregator as aggregator
 from .utils.logger import setup_logger
 
 
@@ -82,18 +83,34 @@ async def health_check():
 
 
 @app.post(f"{settings.API_V1_PREFIX}/detect", response_model=DetectionResult)
-async def detect_injection(request: DetectionRequest):
+async def detect_injection(request: DetectionRequest, http_request: Request = None):
     """
-    Detect prompt injection in a single text.
+    Detect prompt injection in a single text with enhanced multi-tiered defense.
     
     Args:
         request: DetectionRequest with text to analyze
+        http_request: HTTP request object for extracting fingerprint
         
     Returns:
-        DetectionResult with analysis
+        DetectionResult with comprehensive analysis
     """
     try:
-        result = aggregator.detect(request.text)
+        # Extract user fingerprint from request if not provided
+        user_fingerprint = request.user_fingerprint
+        if not user_fingerprint and http_request:
+            # Generate fingerprint from IP and user-agent
+            client_ip = http_request.client.host if http_request.client else "unknown"
+            user_agent = http_request.headers.get("user-agent", "unknown")
+            import hashlib
+            fingerprint_data = f"{client_ip}:{user_agent}"
+            user_fingerprint = hashlib.md5(fingerprint_data.encode()).hexdigest()[:16]
+        
+        result = aggregator.detect(
+            request.text,
+            session_id=request.session_id,
+            user_fingerprint=user_fingerprint,
+            conversation_history=request.conversation_history
+        )
         
         # Update statistics
         _update_stats(result)

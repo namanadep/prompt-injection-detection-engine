@@ -1,11 +1,14 @@
 """API request models."""
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Optional
 
 
 class DetectionRequest(BaseModel):
     """Request for single text detection."""
     text: str = Field(..., min_length=1, max_length=10000, description="Text to analyze for prompt injection")
+    session_id: Optional[str] = Field(None, description="Session identifier for behavioral tracking")
+    user_fingerprint: Optional[str] = Field(None, description="User fingerprint (IP hash, user-agent hash, etc.)")
+    conversation_history: Optional[List[str]] = Field(None, description="Previous messages in conversation for context analysis")
     
 
 class BatchDetectionRequest(BaseModel):
