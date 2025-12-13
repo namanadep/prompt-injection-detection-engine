@@ -10,8 +10,8 @@ from ..models.detection import (
 )
 from ..config import settings
 from ..utils.logger import setup_logger
-from .rule_detector import RuleBasedDetector
-from .ml_detector import MLDetector
+from .advanced_rule_detector import AdvancedRuleDetector
+from .advanced_ml_detector import AdvancedMLDetector
 from .vector_detector import VectorDetector
 
 
@@ -22,9 +22,9 @@ class DetectionAggregator:
     """Aggregates results from multiple detection layers."""
     
     def __init__(self):
-        """Initialize the aggregator with all detectors."""
-        self.rule_detector = RuleBasedDetector()
-        self.ml_detector = MLDetector()
+        """Initialize the aggregator with all advanced detectors."""
+        self.rule_detector = AdvancedRuleDetector()
+        self.ml_detector = AdvancedMLDetector()
         self.vector_detector = VectorDetector()
         
         # Weights for voting
