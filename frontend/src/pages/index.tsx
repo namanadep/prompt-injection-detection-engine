@@ -1,10 +1,10 @@
 /**
- * Main detection page.
+ * Main detection page - Retro-futuristic hacker aesthetic
  */
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { Shield, BarChart3 } from 'lucide-react';
+import { Shield, BarChart3, Terminal, Zap } from 'lucide-react';
 import { DetectionInput } from '../components/DetectionInput';
 import { ResultsDisplay } from '../components/ResultsDisplay';
 import { DetectionResult, apiClient } from '../services/api';
@@ -31,69 +31,119 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Prompt Injection Detection Engine</title>
+        <title>PROMPT INJECTION DETECTOR</title>
         <meta name="description" content="Multi-layer prompt injection detection system" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        {/* Header */}
-        <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <Shield className="text-blue-600" size={32} />
-                <div>
-                  <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                    Prompt Injection Detection Engine
-                  </h1>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    OWASP LLM#1 Threat Protection
-                  </p>
-                </div>
-              </div>
+      <div className="min-h-screen terminal-bg relative" style={{ backgroundColor: '#000000' }}>
+        {/* Scanline effect */}
+        <div className="scanlines"></div>
+
+        {/* Sidebar Navigation */}
+        <aside className="fixed left-0 top-0 h-full w-64 border-r-2 border-yellow-400/30 bg-black/90 backdrop-blur-sm z-40">
+          <div className="p-6">
+            {/* Logo */}
+            <div className="mb-12">
+              <h1 className="text-yellow-400 pixelated neon-glow text-2xl font-bold mb-2">
+                INJECTION
+              </h1>
+              <h2 className="text-yellow-400 pixelated neon-glow text-xl font-bold mb-1">
+                DETECTOR
+              </h2>
+              <p className="text-green-400 text-xs mt-2 opacity-70">
+                MULTI-LAYER DEFENSE SYSTEM
+              </p>
+            </div>
+
+            {/* Navigation */}
+            <nav className="space-y-2">
+              <Link
+                href="/"
+                className="flex items-center space-x-3 px-4 py-3 bg-yellow-400/10 border-l-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400/20 transition-all glitch"
+              >
+                <Terminal size={18} />
+                <span className="text-sm font-mono">DETECTION</span>
+              </Link>
               <Link
                 href="/analytics"
-                className="flex items-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors"
+                className="flex items-center space-x-3 px-4 py-3 hover:bg-yellow-400/10 hover:border-l-2 hover:border-yellow-400/50 text-yellow-400/70 hover:text-yellow-400 transition-all"
               >
                 <BarChart3 size={18} />
-                <span>Analytics</span>
+                <span className="text-sm font-mono">ANALYTICS</span>
               </Link>
+            </nav>
+
+            {/* Status Indicators */}
+            <div className="mt-12 space-y-3">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-400 rounded-full neon-glow" style={{ color: '#00FF41' }}></div>
+                <span className="text-green-400 text-xs font-mono">SYSTEM ONLINE</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full neon-glow"></div>
+                <span className="text-yellow-400 text-xs font-mono">4 TIER DEFENSE</span>
+              </div>
             </div>
           </div>
-        </header>
+        </aside>
 
         {/* Main Content */}
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Description */}
-          <div className="mb-8 text-center">
-            <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              This system uses a multi-layer detection approach combining rule-based patterns,
-              machine learning models, and vector similarity matching to identify prompt injection attacks
-              with high accuracy.
+        <main className="ml-64 min-h-screen p-8">
+          {/* Top Bar */}
+          <div className="flex items-center justify-between mb-8 pb-4 border-b-2 border-yellow-400/20">
+            <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full neon-glow"></div>
+                <span className="text-yellow-400 text-xs font-mono">OWASP LLM#1 PROTECTION</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-400 rounded-full neon-glow" style={{ color: '#00FF41' }}></div>
+                <span className="text-green-400 text-xs font-mono">84.44% ACCURACY</span>
+              </div>
+            </div>
+            <div className="text-yellow-400/50 text-xs font-mono">
+              v1.0.0 | TERMINAL MODE
+            </div>
+          </div>
+
+          {/* Hero Section */}
+          <div className="mb-12">
+            <h1 className="text-yellow-400 pixelated neon-glow text-5xl font-bold mb-4 leading-tight">
+              PROMPT INJECTION
+            </h1>
+            <h2 className="text-yellow-400 pixelated neon-glow text-4xl font-bold mb-6">
+              DETECTION ENGINE
+            </h2>
+            <p className="text-green-400 text-lg font-mono max-w-3xl leading-relaxed">
+              MULTI-LAYER DEFENSE SYSTEM COMBINING RULE-BASED PATTERNS,
+              MACHINE LEARNING MODELS, AND BEHAVIORAL ANALYSIS TO IDENTIFY
+              PROMPT INJECTION ATTACKS WITH HIGH ACCURACY.
             </p>
           </div>
 
           {/* Detection Input */}
-          <DetectionInput onSubmit={handleDetection} isLoading={loading} />
+          <div className="mb-8">
+            <DetectionInput onSubmit={handleDetection} isLoading={loading} />
+          </div>
 
           {/* Error Display */}
           {error && (
-            <div className="mt-6 max-w-4xl mx-auto p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-              <p className="text-red-600 dark:text-red-400">{error}</p>
+            <div className="mb-6 p-4 border-2 border-red-400 bg-red-400/10 neon-border" style={{ borderColor: '#FF0000', color: '#FF0000' }}>
+              <p className="text-red-400 font-mono text-sm neon-glow">ERROR: {error}</p>
             </div>
           )}
 
           {/* Results Display */}
           <ResultsDisplay result={result} />
-        </main>
 
-        {/* Footer */}
-        <footer className="mt-16 py-8 border-t border-gray-200 dark:border-gray-700">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-600 dark:text-gray-400">
-            <p>Prompt Injection Detection Engine v1.0.0 | Built for protecting LLM applications</p>
-          </div>
-        </footer>
+          {/* Footer */}
+          <footer className="mt-16 pt-8 border-t-2 border-yellow-400/20">
+            <p className="text-yellow-400/50 text-xs font-mono text-center">
+              PROMPT INJECTION DETECTION ENGINE v1.0.0 | BUILT FOR PROTECTING LLM APPLICATIONS
+            </p>
+          </footer>
+        </main>
       </div>
     </>
   );

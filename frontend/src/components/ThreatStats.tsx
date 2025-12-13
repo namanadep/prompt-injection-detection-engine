@@ -1,8 +1,8 @@
 /**
- * Threat statistics component.
+ * Threat statistics component - Terminal style
  */
 import React from 'react';
-import { Activity, Shield, TrendingUp, AlertTriangle } from 'lucide-react';
+import { Activity, Shield, TrendingUp, AlertTriangle, Terminal } from 'lucide-react';
 import { DetectionStats } from '../services/api';
 
 interface ThreatStatsProps {
@@ -16,28 +16,32 @@ export const ThreatStats: React.FC<ThreatStatsProps> = ({ stats }) => {
 
   const statCards = [
     {
-      title: 'Total Requests',
+      title: 'TOTAL REQUESTS',
       value: stats.total_requests.toLocaleString(),
-      icon: <Activity size={24} />,
-      color: 'text-blue-600 bg-blue-50 dark:bg-blue-900/20',
+      icon: <Activity size={20} />,
+      borderColor: '#00FFFF',
+      textColor: '#00FFFF',
     },
     {
-      title: 'Threats Detected',
+      title: 'THREATS DETECTED',
       value: stats.threats_detected.toLocaleString(),
-      icon: <AlertTriangle size={24} />,
-      color: 'text-red-600 bg-red-50 dark:bg-red-900/20',
+      icon: <AlertTriangle size={20} />,
+      borderColor: '#FF0000',
+      textColor: '#FF0000',
     },
     {
-      title: 'Threat Rate',
+      title: 'THREAT RATE',
       value: `${stats.threat_percentage.toFixed(1)}%`,
-      icon: <TrendingUp size={24} />,
-      color: 'text-orange-600 bg-orange-50 dark:bg-orange-900/20',
+      icon: <TrendingUp size={20} />,
+      borderColor: '#FF8C00',
+      textColor: '#FF8C00',
     },
     {
-      title: 'Avg Confidence',
+      title: 'AVG CONFIDENCE',
       value: `${(stats.avg_confidence * 100).toFixed(1)}%`,
-      icon: <Shield size={24} />,
-      color: 'text-green-600 bg-green-50 dark:bg-green-900/20',
+      icon: <Shield size={20} />,
+      borderColor: '#00FF41',
+      textColor: '#00FF41',
     },
   ];
 
@@ -46,13 +50,31 @@ export const ThreatStats: React.FC<ThreatStatsProps> = ({ stats }) => {
       {statCards.map((card, index) => (
         <div
           key={index}
-          className="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg"
+          className="border-2 bg-black/60 neon-border relative group hover:scale-105 transition-transform"
+          style={{ borderColor: card.borderColor }}
         >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-gray-600 dark:text-gray-400">{card.title}</span>
-            <div className={`p-2 rounded-lg ${card.color}`}>{card.icon}</div>
+          {/* Terminal Header */}
+          <div className="border-b-2 px-3 py-2 flex items-center justify-between" style={{ borderColor: card.borderColor }}>
+            <Terminal size={14} style={{ color: card.textColor, opacity: 0.7 }} />
+            <span className="text-xs font-mono uppercase tracking-wider" style={{ color: card.textColor, opacity: 0.7 }}>
+              STAT
+            </span>
           </div>
-          <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{card.value}</div>
+          
+          {/* Content */}
+          <div className="p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-mono uppercase tracking-wider" style={{ color: card.textColor, opacity: 0.7 }}>
+                {card.title}
+              </span>
+              <div style={{ color: card.textColor, opacity: 0.5 }}>
+                {card.icon}
+              </div>
+            </div>
+            <div className="text-3xl font-mono font-bold neon-glow" style={{ color: card.textColor }}>
+              {card.value}
+            </div>
+          </div>
         </div>
       ))}
     </div>

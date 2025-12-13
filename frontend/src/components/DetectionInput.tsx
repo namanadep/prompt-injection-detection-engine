@@ -1,8 +1,8 @@
 /**
- * Detection input component for submitting text to analyze.
+ * Detection input component - Terminal style
  */
 import React, { useState } from 'react';
-import { AlertCircle, Send } from 'lucide-react';
+import { Terminal, Zap, Code } from 'lucide-react';
 
 interface DetectionInputProps {
   onSubmit: (text: string) => void;
@@ -30,49 +30,98 @@ export const DetectionInput: React.FC<DetectionInputProps> = ({ onSubmit, isLoad
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="text-input" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Enter text to analyze for prompt injection
-          </label>
-          <textarea
-            id="text-input"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Type or paste text here..."
-            className="w-full h-40 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 resize-none"
-            disabled={isLoading}
-          />
-        </div>
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
-            <AlertCircle size={16} />
-            <span>Characters: {text.length} / 10000</span>
+    <div className="w-full max-w-5xl">
+      {/* Terminal Window */}
+      <div className="border-2 border-yellow-400/50 bg-black/80 neon-border" style={{ borderColor: '#FFD700' }}>
+        {/* Terminal Header */}
+        <div className="bg-yellow-400/10 border-b-2 border-yellow-400/30 px-4 py-2 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Terminal size={16} className="text-yellow-400" />
+            <span className="text-yellow-400 text-xs font-mono">TERMINAL_INPUT</span>
           </div>
-          <button
-            type="submit"
-            disabled={isLoading || !text.trim()}
-            className="flex items-center space-x-2 px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg transition-colors"
-          >
-            <Send size={18} />
-            <span>{isLoading ? 'Analyzing...' : 'Analyze'}</span>
-          </button>
+          <div className="flex items-center space-x-1">
+            <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+            <div className="w-2 h-2 bg-yellow-400/50 rounded-full"></div>
+            <div className="w-2 h-2 bg-yellow-400/30 rounded-full"></div>
+          </div>
         </div>
-      </form>
 
-      <div className="mt-6">
-        <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Try an example:</p>
-        <div className="flex flex-wrap gap-2">
+        {/* Terminal Body */}
+        <form onSubmit={handleSubmit} className="p-6">
+          <div className="mb-4">
+            <label htmlFor="text-input" className="block text-green-400 text-xs font-mono mb-3 neon-glow" style={{ color: '#00FF41' }}>
+              &gt; ENTER TEXT TO ANALYZE FOR PROMPT INJECTION
+            </label>
+            <textarea
+              id="text-input"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Type or paste text here..."
+              className="w-full h-48 px-4 py-3 border-2 border-yellow-400/30 bg-black text-yellow-400 font-mono text-sm resize-none focus:outline-none focus:border-yellow-400 neon-border transition-all"
+              style={{ 
+                backgroundColor: '#000000',
+                borderColor: text ? '#FFD700' : 'rgba(255, 215, 0, 0.3)',
+                color: '#FFD700'
+              }}
+              disabled={isLoading}
+            />
+            {!text && (
+              <div className="mt-2 text-yellow-400/30 text-xs font-mono">
+                <span className="cursor-blink">_</span>
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2 text-xs font-mono">
+                <Code size={14} className="text-green-400" style={{ color: '#00FF41' }} />
+                <span className="text-green-400" style={{ color: '#00FF41' }}>
+                  CHARS: {text.length} / 10000
+                </span>
+              </div>
+            </div>
+            <button
+              type="submit"
+              disabled={isLoading || !text.trim()}
+              className="flex items-center space-x-2 px-6 py-3 bg-yellow-400/20 border-2 border-yellow-400 text-yellow-400 font-mono text-sm hover:bg-yellow-400/30 disabled:opacity-50 disabled:cursor-not-allowed transition-all neon-border glitch"
+              style={{ 
+                borderColor: isLoading || !text.trim() ? 'rgba(255, 215, 0, 0.3)' : '#FFD700',
+                color: '#FFD700'
+              }}
+            >
+              <Zap size={16} />
+              <span>{isLoading ? 'ANALYZING...' : 'EXECUTE'}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* Example Prompts */}
+      <div className="mt-8">
+        <p className="text-yellow-400/70 text-xs font-mono mb-4 uppercase tracking-wider">
+          &gt; TRY EXAMPLES:
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {examplePrompts.map((example, index) => (
             <button
               key={index}
               onClick={() => loadExample(example)}
-              className="px-3 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-md transition-colors"
+              className="group relative p-4 border-2 border-yellow-400/20 bg-black/60 hover:border-yellow-400/50 hover:bg-yellow-400/10 transition-all text-left"
+              style={{ borderColor: 'rgba(255, 215, 0, 0.2)' }}
               disabled={isLoading}
             >
-              Example {index + 1}
+              <div className="flex items-start space-x-2">
+                <span className="text-yellow-400/50 text-xs font-mono group-hover:text-yellow-400">
+                  [{index + 1}]
+                </span>
+                <p className="text-yellow-400/70 text-xs font-mono group-hover:text-yellow-400 flex-1">
+                  {example.length > 50 ? example.substring(0, 50) + '...' : example}
+                </p>
+              </div>
+              <div className="mt-2 text-yellow-400/30 text-xs font-mono group-hover:text-yellow-400/50">
+                CLICK TO LOAD
+              </div>
             </button>
           ))}
         </div>
