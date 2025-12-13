@@ -39,93 +39,70 @@ export default function Analytics() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className="min-h-screen terminal-bg relative" style={{ backgroundColor: '#000000' }}>
-        {/* Scanline effect */}
-        <div className="scanlines"></div>
-
-        {/* Sidebar Navigation */}
-        <aside className="fixed left-0 top-0 h-full w-64 border-r-2 border-yellow-400/30 bg-black/90 backdrop-blur-sm z-40">
-          <div className="p-6">
-            {/* Logo */}
-            <div className="mb-12">
-              <h1 className="text-yellow-400 pixelated neon-glow text-2xl font-bold mb-2">
-                INJECTION
-              </h1>
-              <h2 className="text-yellow-400 pixelated neon-glow text-xl font-bold mb-1">
-                DETECTOR
-              </h2>
-              <p className="text-green-400 text-xs mt-2 opacity-70">
-                MULTI-LAYER DEFENSE SYSTEM
-              </p>
-            </div>
-
-            {/* Navigation */}
-            <nav className="space-y-2">
+      <div className="min-h-screen" style={{ backgroundColor: '#FAFAFA' }}>
+        {/* Header */}
+        <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: '#2D5016' }}>
+                  <Shield className="text-white" size={24} />
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold" style={{ color: '#2D5016' }}>
+                    Prompt Injection Detector
+                  </h1>
+                </div>
+              </div>
+              <nav className="hidden md:flex items-center space-x-8">
+                <Link href="/" className="text-sm font-medium hover:opacity-70 transition-opacity" style={{ color: '#2D5016' }}>
+                  Detection
+                </Link>
+                <Link href="/analytics" className="text-sm font-medium hover:opacity-70 transition-opacity font-semibold" style={{ color: '#2D5016' }}>
+                  Analytics
+                </Link>
+                <Link href="/analytics" className="text-sm font-medium hover:opacity-70 transition-opacity" style={{ color: '#2D5016' }}>
+                  How it Works
+                </Link>
+                <Link href="/analytics" className="text-sm font-medium hover:opacity-70 transition-opacity" style={{ color: '#2D5016' }}>
+                  FAQ
+                </Link>
+              </nav>
               <Link
                 href="/"
-                className="flex items-center space-x-3 px-4 py-3 hover:bg-yellow-400/10 hover:border-l-2 hover:border-yellow-400/50 text-yellow-400/70 hover:text-yellow-400 transition-all"
+                className="px-5 py-2 rounded-full text-sm font-semibold transition-all playful-hover"
+                style={{ backgroundColor: '#87CEEB', color: '#2D5016' }}
               >
-                <Home size={18} />
-                <span className="text-sm font-mono">DETECTION</span>
+                Back to Detection
               </Link>
-              <Link
-                href="/analytics"
-                className="flex items-center space-x-3 px-4 py-3 bg-yellow-400/10 border-l-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400/20 transition-all glitch"
-              >
-                <Shield size={18} />
-                <span className="text-sm font-mono">ANALYTICS</span>
-              </Link>
-            </nav>
-
-            {/* Status Indicators */}
-            <div className="mt-12 space-y-3">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-400 rounded-full neon-glow" style={{ color: '#00FF41' }}></div>
-                <span className="text-green-400 text-xs font-mono">SYSTEM ONLINE</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full neon-glow"></div>
-                <span className="text-yellow-400 text-xs font-mono">4 TIER DEFENSE</span>
-              </div>
             </div>
           </div>
-        </aside>
+        </header>
 
         {/* Main Content */}
-        <main className="ml-64 min-h-screen p-8">
-          {/* Top Bar */}
-          <div className="flex items-center justify-between mb-8 pb-4 border-b-2 border-yellow-400/20">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full neon-glow"></div>
-                <span className="text-yellow-400 text-xs font-mono">ANALYTICS DASHBOARD</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-400 rounded-full neon-glow" style={{ color: '#00FF41' }}></div>
-                <span className="text-green-400 text-xs font-mono">REAL-TIME DATA</span>
-              </div>
-            </div>
-            <div className="text-yellow-400/50 text-xs font-mono">
-              v1.0.0 | TERMINAL MODE
-            </div>
-          </div>
-
+        <main className="max-w-7xl mx-auto px-6 py-16">
           {/* Hero Section */}
-          <div className="mb-12">
-            <h1 className="text-yellow-400 pixelated neon-glow text-5xl font-bold mb-4 leading-tight">
-              ANALYTICS
+          <div className="text-center mb-16 fade-in-up">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight" style={{ color: '#2D5016' }}>
+              Analytics{' '}
+              <span className="hand-drawn-circle" style={{ color: '#2D5016' }}>
+                Dashboard
+              </span>
             </h1>
-            <h2 className="text-yellow-400 pixelated neon-glow text-4xl font-bold mb-6">
-              DASHBOARD
-            </h2>
-            <p className="text-green-400 text-lg font-mono max-w-3xl leading-relaxed">
-              REAL-TIME DETECTION STATISTICS AND INSIGHTS FROM THE MULTI-LAYER DEFENSE SYSTEM.
+            
+            {/* Progress bar */}
+            <div className="max-w-4xl mx-auto mb-8">
+              <div className="progress-bar" style={{ backgroundColor: '#2D5016', height: '4px' }}></div>
+            </div>
+
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Real-time detection statistics and insights from the multi-layer defense system.
             </p>
           </div>
 
           {loading ? (
-            <div className="flex items-center justify-center h-64 border-2 border-yellow-400/30 bg-black/60">
-              <div className="text-yellow-400 font-mono text-sm neon-glow">LOADING STATISTICS...</div>
+            <div className="flex items-center justify-center h-64 clean-card">
+              <div className="text-gray-600 font-medium">Loading statistics...</div>
             </div>
           ) : (
             <>
@@ -136,14 +113,16 @@ export default function Analytics() {
               <AnalyticsDashboard />
             </>
           )}
-
-          {/* Footer */}
-          <footer className="mt-16 pt-8 border-t-2 border-yellow-400/20">
-            <p className="text-yellow-400/50 text-xs font-mono text-center">
-              PROMPT INJECTION DETECTION ENGINE v1.0.0 | BUILT FOR PROTECTING LLM APPLICATIONS
-            </p>
-          </footer>
         </main>
+
+        {/* Footer */}
+        <footer className="bg-white border-t border-gray-100 py-12 mt-24">
+          <div className="max-w-7xl mx-auto px-6 text-center">
+            <p className="text-gray-600 text-sm">
+              Prompt Injection Detection Engine v1.0.0 | Built for protecting LLM applications
+            </p>
+          </div>
+        </footer>
       </div>
     </>
   );

@@ -2,124 +2,193 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-  --neon-yellow: #FFD700;
-  --neon-green: #00FF41;
-  --neon-cyan: #00FFFF;
-  --neon-pink: #FF00FF;
-  --terminal-black: #000000;
-  --terminal-dark: #0A0A0A;
-  --terminal-gray: #1A1A1A;
-  --text-primary: #FFD700;
-  --text-secondary: #00FF41;
-  --text-muted: #888888;
+  --primary-green: #2D5016;
+  --dark-green: #1a3d0d;
+  --light-blue: #87CEEB;
+  --accent-yellow: #FFD700;
+  --bg-light: #FAFAFA;
+  --bg-off-white: #F5F5F5;
+  --text-dark: #1a1a1a;
+  --text-muted: #666666;
 }
 
 * {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 body {
-  background: var(--terminal-black);
-  color: var(--text-primary);
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  font-family: 'Inter', sans-serif;
   overflow-x: hidden;
 }
 
-/* Pixelated font effect */
-@font-face {
-  font-family: 'Pixelated';
-  src: url('data:font/woff2;base64,') format('woff2');
+/* Hand-drawn circle highlight */
+.hand-drawn-circle {
+  position: relative;
+  display: inline-block;
 }
 
-.pixelated {
-  font-family: 'JetBrains Mono', monospace;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-  text-rendering: optimizeSpeed;
-  letter-spacing: 0.05em;
-}
-
-/* Terminal cursor blink */
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-
-.cursor-blink::after {
-  content: '_';
-  animation: blink 1s infinite;
-  color: var(--neon-yellow);
-}
-
-/* Neon glow effects */
-.neon-glow {
-  text-shadow: 
-    0 0 5px currentColor,
-    0 0 10px currentColor,
-    0 0 15px currentColor,
-    0 0 20px currentColor;
-}
-
-.neon-border {
-  box-shadow: 
-    0 0 5px currentColor,
-    0 0 10px currentColor,
-    0 0 15px currentColor,
-    inset 0 0 5px currentColor;
-}
-
-/* Scanline effect */
-@keyframes scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
-}
-
-.scanlines::before {
+.hand-drawn-circle::after {
   content: '';
-  position: fixed;
-  top: 0;
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110%;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--light-blue);
+  opacity: 0.3;
+  z-index: -1;
+}
+
+.hand-drawn-circle-yellow::after {
+  background: var(--accent-yellow);
+  opacity: 0.4;
+}
+
+/* Hand-drawn underline */
+.hand-drawn-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.hand-drawn-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
   left: 0;
   width: 100%;
-  height: 2px;
-  background: rgba(0, 255, 65, 0.3);
-  animation: scanline 8s linear infinite;
-  pointer-events: none;
-  z-index: 9999;
+  height: 3px;
+  background: var(--accent-yellow);
+  border-radius: 2px;
+  opacity: 0.6;
 }
 
-/* Terminal grid background */
-.terminal-bg {
-  background-image: 
-    linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
-  background-size: 20px 20px;
+/* Smooth animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Glitch effect */
-@keyframes glitch {
-  0% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-  100% { transform: translate(0); }
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
 }
 
-.glitch:hover {
-  animation: glitch 0.3s infinite;
+/* Playful hover effects */
+.playful-hover {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* VHS distortion */
-@keyframes vhs-distort {
-  0%, 100% { transform: scaleY(1); }
-  50% { transform: scaleY(1.02); }
+.playful-hover:hover {
+  transform: translateY(-2px) scale(1.02);
 }
 
-.vhs-effect {
-  animation: vhs-distort 0.1s infinite;
+/* Clean card style */
+.clean-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+.clean-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+}
+
+/* Primary button */
+.btn-primary {
+  background: var(--primary-green);
+  color: white;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: var(--dark-green);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 80, 22, 0.3);
+}
+
+/* Secondary button */
+.btn-secondary {
+  background: white;
+  color: var(--primary-green);
+  border: 2px solid var(--primary-green);
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: var(--primary-green);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Tertiary button with hand-drawn circle */
+.btn-tertiary {
+  background: white;
+  color: var(--primary-green);
+  border: 2px solid var(--primary-green);
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.btn-tertiary::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  bottom: -4px;
+  left: -4px;
+  border: 2px solid var(--light-blue);
+  border-radius: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-tertiary:hover::after {
+  opacity: 0.5;
+}
+
+/* Progress bar style */
+.progress-bar {
+  height: 4px;
+  background: var(--primary-green);
+  border-radius: 2px;
+  position: relative;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 20%;
+  background: var(--accent-yellow);
+  border-radius: 2px;
 }
 

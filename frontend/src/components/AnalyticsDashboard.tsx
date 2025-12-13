@@ -31,23 +31,23 @@ export const AnalyticsDashboard: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center h-64 border-2 border-yellow-400/30 bg-black/60">
-                <div className="text-yellow-400 font-mono text-sm neon-glow">LOADING ANALYTICS...</div>
+            <div className="flex items-center justify-center h-64 clean-card">
+                <div className="text-gray-600 font-medium">Loading analytics...</div>
             </div>
         );
     }
 
     if (error || !analytics) {
         return (
-            <div className="flex items-center justify-center h-64 border-2 border-red-400/30 bg-black/60" style={{ borderColor: 'rgba(255, 0, 0, 0.3)' }}>
-                <div className="text-red-400 font-mono text-sm neon-glow" style={{ color: '#FF0000' }}>
-                    ERROR: {error || 'NO ANALYTICS DATA AVAILABLE'}
+            <div className="flex items-center justify-center h-64 clean-card border-2 border-red-200 bg-red-50">
+                <div className="text-red-600 font-medium">
+                    Error: {error || 'No analytics data available'}
                 </div>
             </div>
         );
     }
 
-    const COLORS = ['#FFD700', '#FF0000', '#00FF41', '#00FFFF', '#FF00FF'];
+    const COLORS = ['#2D5016', '#87CEEB', '#FFD700', '#F97316', '#EF4444'];
 
     // Prepare data for charts
     const methodData = Object.entries(analytics.method_effectiveness).map(([name, value]) => ({
@@ -60,121 +60,119 @@ export const AnalyticsDashboard: React.FC = () => {
     return (
         <div className="space-y-8">
             {/* Method Effectiveness */}
-            <div className="border-2 border-yellow-400/30 bg-black/60 neon-border" style={{ borderColor: 'rgba(255, 215, 0, 0.3)' }}>
-                <div className="border-b-2 border-yellow-400/30 px-4 py-3 flex items-center space-x-2" style={{ borderColor: 'rgba(255, 215, 0, 0.3)' }}>
-                    <Target className="text-yellow-400" size={20} />
-                    <h3 className="text-sm font-mono uppercase tracking-wider text-yellow-400 neon-glow">METHOD EFFECTIVENESS</h3>
+            <div className="clean-card p-8">
+                <div className="flex items-center space-x-3 mb-6">
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#2D5016' }}>
+                        <Target className="text-white" size={24} />
+                    </div>
+                    <h3 className="text-xl font-bold" style={{ color: '#2D5016' }}>Detection Method Effectiveness</h3>
                 </div>
-                <div className="p-6">
-                    <ResponsiveContainer width="100%" height={300}>
-                        <PieChart>
-                            <Pie
-                                data={methodData}
-                                cx="50%"
-                                cy="50%"
-                                labelLine={false}
-                                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                                outerRadius={100}
-                                fill="#8884d8"
-                                dataKey="value"
-                            >
-                                {methodData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                ))}
-                            </Pie>
-                            <Tooltip 
-                                contentStyle={{ 
-                                    backgroundColor: '#000000', 
-                                    border: '2px solid #FFD700',
-                                    color: '#FFD700',
-                                    fontFamily: 'monospace'
-                                }}
-                            />
-                        </PieChart>
-                    </ResponsiveContainer>
-                </div>
+                <ResponsiveContainer width="100%" height={300}>
+                    <PieChart>
+                        <Pie
+                            data={methodData}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                            outerRadius={100}
+                            fill="#8884d8"
+                            dataKey="value"
+                        >
+                            {methodData.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                        </Pie>
+                        <Tooltip 
+                            contentStyle={{ 
+                                backgroundColor: 'white', 
+                                border: '1px solid #E5E5E5',
+                                borderRadius: '8px',
+                                color: '#2D5016'
+                            }}
+                        />
+                    </PieChart>
+                </ResponsiveContainer>
             </div>
 
             {/* Top Patterns */}
-            <div className="border-2 border-cyan-400/30 bg-black/60 neon-border" style={{ borderColor: 'rgba(0, 255, 255, 0.3)' }}>
-                <div className="border-b-2 border-cyan-400/30 px-4 py-3 flex items-center space-x-2" style={{ borderColor: 'rgba(0, 255, 255, 0.3)' }}>
-                    <Activity className="text-cyan-400" size={20} style={{ color: '#00FFFF' }} />
-                    <h3 className="text-sm font-mono uppercase tracking-wider text-cyan-400 neon-glow" style={{ color: '#00FFFF' }}>TOP DETECTION PATTERNS</h3>
+            <div className="clean-card p-8">
+                <div className="flex items-center space-x-3 mb-6">
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#87CEEB' }}>
+                        <Activity className="text-white" size={24} />
+                    </div>
+                    <h3 className="text-xl font-bold" style={{ color: '#2D5016' }}>Top Detection Patterns</h3>
                 </div>
-                <div className="p-6">
-                    <ResponsiveContainer width="100%" height={300}>
-                        <BarChart data={topPatternsData}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#00FFFF" opacity={0.2} />
-                            <XAxis 
-                                dataKey="name" 
-                                angle={-45} 
-                                textAnchor="end" 
-                                height={100}
-                                tick={{ fill: '#00FFFF', fontFamily: 'monospace', fontSize: 10 }}
-                            />
-                            <YAxis tick={{ fill: '#00FFFF', fontFamily: 'monospace', fontSize: 10 }} />
-                            <Tooltip 
-                                contentStyle={{ 
-                                    backgroundColor: '#000000', 
-                                    border: '2px solid #00FFFF',
-                                    color: '#00FFFF',
-                                    fontFamily: 'monospace'
-                                }}
-                            />
-                            <Bar dataKey="count" fill="#00FFFF" />
-                        </BarChart>
-                    </ResponsiveContainer>
-                </div>
+                <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={topPatternsData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
+                        <XAxis 
+                            dataKey="name" 
+                            angle={-45} 
+                            textAnchor="end" 
+                            height={100}
+                            tick={{ fill: '#666666', fontSize: 12 }}
+                        />
+                        <YAxis tick={{ fill: '#666666', fontSize: 12 }} />
+                        <Tooltip 
+                            contentStyle={{ 
+                                backgroundColor: 'white', 
+                                border: '1px solid #E5E5E5',
+                                borderRadius: '8px',
+                                color: '#2D5016'
+                            }}
+                        />
+                        <Bar dataKey="count" fill="#2D5016" radius={[8, 8, 0, 0]} />
+                    </BarChart>
+                </ResponsiveContainer>
             </div>
 
             {/* Confidence Distribution */}
-            <div className="border-2 border-green-400/30 bg-black/60 neon-border" style={{ borderColor: 'rgba(0, 255, 65, 0.3)' }}>
-                <div className="border-b-2 border-green-400/30 px-4 py-3 flex items-center space-x-2" style={{ borderColor: 'rgba(0, 255, 65, 0.3)' }}>
-                    <TrendingUp className="text-green-400" size={20} style={{ color: '#00FF41' }} />
-                    <h3 className="text-sm font-mono uppercase tracking-wider text-green-400 neon-glow" style={{ color: '#00FF41' }}>CONFIDENCE DISTRIBUTION</h3>
+            <div className="clean-card p-8">
+                <div className="flex items-center space-x-3 mb-6">
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#FFD700' }}>
+                        <TrendingUp className="text-white" size={24} />
+                    </div>
+                    <h3 className="text-xl font-bold" style={{ color: '#2D5016' }}>Confidence Score Distribution</h3>
                 </div>
-                <div className="p-6">
-                    <ResponsiveContainer width="100%" height={300}>
-                        <LineChart data={analytics.confidence_distribution}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#00FF41" opacity={0.2} />
-                            <XAxis 
-                                dataKey="confidence" 
-                                tickFormatter={(value) => `${(value * 100).toFixed(0)}%`}
-                                tick={{ fill: '#00FF41', fontFamily: 'monospace', fontSize: 10 }}
-                            />
-                            <YAxis tick={{ fill: '#00FF41', fontFamily: 'monospace', fontSize: 10 }} />
-                            <Tooltip 
-                                contentStyle={{ 
-                                    backgroundColor: '#000000', 
-                                    border: '2px solid #00FF41',
-                                    color: '#00FF41',
-                                    fontFamily: 'monospace'
-                                }}
-                                labelFormatter={(value) => `CONFIDENCE: ${(Number(value) * 100).toFixed(0)}%`}
-                            />
-                            <Legend 
-                                wrapperStyle={{ color: '#00FF41', fontFamily: 'monospace' }}
-                            />
-                            <Line 
-                                type="monotone" 
-                                dataKey="count" 
-                                stroke="#00FF41" 
-                                strokeWidth={2}
-                                dot={{ fill: '#00FF41' }}
-                            />
-                        </LineChart>
-                    </ResponsiveContainer>
-                </div>
+                <ResponsiveContainer width="100%" height={300}>
+                    <LineChart data={analytics.confidence_distribution}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
+                        <XAxis 
+                            dataKey="confidence" 
+                            tickFormatter={(value) => `${(value * 100).toFixed(0)}%`}
+                            tick={{ fill: '#666666', fontSize: 12 }}
+                        />
+                        <YAxis tick={{ fill: '#666666', fontSize: 12 }} />
+                        <Tooltip 
+                            contentStyle={{ 
+                                backgroundColor: 'white', 
+                                border: '1px solid #E5E5E5',
+                                borderRadius: '8px',
+                                color: '#2D5016'
+                            }}
+                            labelFormatter={(value) => `Confidence: ${(Number(value) * 100).toFixed(0)}%`}
+                        />
+                        <Legend />
+                        <Line 
+                            type="monotone" 
+                            dataKey="count" 
+                            stroke="#2D5016" 
+                            strokeWidth={3}
+                            dot={{ fill: '#2D5016', r: 4 }}
+                            activeDot={{ r: 6 }}
+                        />
+                    </LineChart>
+                </ResponsiveContainer>
             </div>
 
             {/* Refresh Button */}
             <div className="flex justify-center">
                 <button
                     onClick={loadAnalytics}
-                    className="px-6 py-3 bg-yellow-400/20 border-2 border-yellow-400 text-yellow-400 font-mono text-sm hover:bg-yellow-400/30 transition-all neon-border glitch"
-                    style={{ borderColor: '#FFD700', color: '#FFD700' }}
+                    className="btn-secondary"
                 >
-                    REFRESH ANALYTICS
+                    Refresh Analytics
                 </button>
             </div>
         </div>
