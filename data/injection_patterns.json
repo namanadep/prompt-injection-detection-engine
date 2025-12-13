@@ -1,0 +1,121 @@
+{
+  "patterns": [
+    {
+      "id": "system_override",
+      "name": "System Prompt Override",
+      "regex": "(?i)(ignore|disregard|forget).{0,20}(previous|above|prior|earlier).{0,20}(instruction|prompt|direction|command)",
+      "severity": "high",
+      "confidence": 0.9
+    },
+    {
+      "id": "role_playing",
+      "name": "Role Playing Attack",
+      "regex": "(?i)(you are now|act as|pretend to be|simulate|roleplay).{0,50}(jailbreak|dan|unrestricted|unfiltered)",
+      "severity": "high",
+      "confidence": 0.85
+    },
+    {
+      "id": "instruction_injection",
+      "name": "Direct Instruction Injection",
+      "regex": "(?i)(new instruction|update your|change your|modify your).{0,30}(behavior|rules|guidelines|parameters)",
+      "severity": "high",
+      "confidence": 0.88
+    },
+    {
+      "id": "system_message",
+      "name": "System Message Injection",
+      "regex": "(?i)(system:|assistant:|user:|<\\|im_start\\|>|<\\|im_end\\|>)",
+      "severity": "high",
+      "confidence": 0.92
+    },
+    {
+      "id": "prompt_leaking",
+      "name": "Prompt Leaking Attempt",
+      "regex": "(?i)(show|reveal|display|print|output).{0,20}(your|the).{0,20}(prompt|instruction|system message|initial)",
+      "severity": "medium",
+      "confidence": 0.75
+    },
+    {
+      "id": "encoding_obfuscation",
+      "name": "Encoding/Obfuscation",
+      "regex": "(base64|rot13|hex|unicode|\\\\x[0-9a-f]{2}|\\\\u[0-9a-f]{4})",
+      "severity": "medium",
+      "confidence": 0.7
+    },
+    {
+      "id": "delimiter_injection",
+      "name": "Delimiter Injection",
+      "regex": "(---|===|###|\\*\\*\\*|<<<|>>>){3,}",
+      "severity": "medium",
+      "confidence": 0.65
+    },
+    {
+      "id": "code_execution",
+      "name": "Code Execution Attempt",
+      "regex": "(?i)(execute|run|eval|exec|import os|subprocess|shell).{0,30}(code|command|script)",
+      "severity": "high",
+      "confidence": 0.8
+    },
+    {
+      "id": "jailbreak_keywords",
+      "name": "Jailbreak Keywords",
+      "regex": "(?i)(jailbreak|DAN|do anything now|bypass filter|unrestricted mode|developer mode)",
+      "severity": "high",
+      "confidence": 0.95
+    },
+    {
+      "id": "context_escape",
+      "name": "Context Escape Attempt",
+      "regex": "(?i)(end of|exit|break out of|escape).{0,20}(context|conversation|chat|session)",
+      "severity": "medium",
+      "confidence": 0.72
+    },
+    {
+      "id": "privilege_escalation",
+      "name": "Privilege Escalation",
+      "regex": "(?i)(admin|root|sudo|superuser|elevated).{0,20}(access|mode|privilege|permission)",
+      "severity": "high",
+      "confidence": 0.78
+    },
+    {
+      "id": "payload_markers",
+      "name": "Payload Markers",
+      "regex": "(<script>|<iframe>|javascript:|data:|vbscript:|onload=|onerror=)",
+      "severity": "high",
+      "confidence": 0.9
+    }
+  ],
+  "keywords": {
+    "high_risk": [
+      "ignore previous",
+      "disregard above",
+      "new instructions",
+      "system:",
+      "jailbreak",
+      "DAN mode",
+      "developer mode",
+      "unrestricted",
+      "bypass",
+      "override"
+    ],
+    "medium_risk": [
+      "pretend",
+      "roleplay",
+      "act as",
+      "simulate",
+      "reveal prompt",
+      "show instructions",
+      "base64",
+      "encode"
+    ],
+    "encoding_indicators": [
+      "base64",
+      "rot13",
+      "hex",
+      "unicode",
+      "url encode",
+      "decode"
+    ]
+  }
+}
+
