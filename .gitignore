@@ -50,8 +50,11 @@ yarn-error.log*
 # Data
 data/models/*
 data/chroma_db/*
+backend/data/chroma_db/*
+backend/data/models/*
 *.db
 *.sqlite
+*.sqlite3
 
 # OS
 .DS_Store
