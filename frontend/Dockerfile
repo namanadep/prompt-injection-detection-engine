@@ -27,8 +27,9 @@ RUN npm ci --only=production
 
 # Copy built application
 COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.js ./
+# Create empty public directory (Next.js doesn't require it, but some configs expect it)
+RUN mkdir -p ./public
 
 # Expose port
 EXPOSE 3000
